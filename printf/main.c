@@ -9,7 +9,7 @@
  */
 int main(void)
 {
-    _printf("Let's try to printf a simple sentence.");
-    printf("Let's try to printf a simple sentence.");
+    _printf("Let's try to printf a simple sentence.\n");
+    printf("Let's try to printf a simple sentence.\n");
     return (0);
 }
