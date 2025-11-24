@@ -1,6 +1,9 @@
-#include <stdio.h>
+#include "main.h"
 int _printf(const char *format, ...)
 {
-    printf("Hello");
-    return (0);
+	int i;
+	
+	for (i = 0; format[i] != '\0'; i++)
+		_putchar(format[i]);
+	return (0);
 }
