@@ -4,6 +4,12 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+typedef struct specifier
+{
+	char type;
+	void (*print_format)(va_list);
+} spec;
+
 int _putchar(char c);
 int _printf(const char *format, ...);
 void print_char(va_list args);

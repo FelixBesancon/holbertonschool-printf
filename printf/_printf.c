@@ -1,10 +1,4 @@
 #include "main.h"
-
-typedef struct specifier
-{
-	char type;
-	void (*print_format)(va_list);
-} spec;
 /**
  * _printf - Prints formated output to the standard output.
  * @format: The string to print containing the specifiers.
