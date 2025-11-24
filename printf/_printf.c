@@ -11,6 +11,7 @@ int _printf(const char *format, ...)
 	char sp;
 	spec print_to_what[] = {
 		{'c', print_char},
+		{'s', print_string},
 		{0, NULL},
 	};
 	va_list args;
@@ -25,6 +26,11 @@ int _printf(const char *format, ...)
 		else
 		{
 			sp = format[i + 1];
+			if (sp == '%')
+			{
+				_putchar('%');
+					i++;
+			}
 			for (j = 0; print_to_what[j].type != 0; j++)
 			{
 				if (sp == print_to_what[j].type)
