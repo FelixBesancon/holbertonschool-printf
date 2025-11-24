@@ -1,0 +1,124 @@
+-------------------------------------------------------------
+#  README.md
+### `_printf` – Custom implementation of the C printf function
+
+-------------------------------------------------------------
+## 1. Description
+
+### This project is a custom recreation of the standard C `printf` function.
+Our implementation handles formatted output, using variadic functions 
+and specific conversion specifiers.
+
+We describe here:
+- What the `_printf` function supports.
+- What it does not support.
+- The internal logic of how the function processes a format string.
+
+-------------------------------------------------------------
+## 2. Compilation
+
+To compile all source files:
+
+    gcc -Wall -Werror -Wextra -pedantic -std=gnu89 -Wno-format *.c
+
+-------------------------------------------------------------
+## 3. Requirements
+
+- Ubuntu 20.04 LTS
+- GCC (GNU Compiler Collection)
+- Git / GitHub
+- Collaboration workflow with branches (`main`, `Felix`, `Pawnee`)
+- Allowed editors: vi, vim, emacs
+- No global variables are used
+- No more than 5 functions per file
+- No use of the `switch` keyword
+- Use of variadic functions (`stdarg.h`)
+- The code uses the Betty style
+- Project written in C following the Holberton School style guidelines
+
+-------------------------------------------------------------
+## 4. Supported Conversion Specifiers
+
+Our implementation currently supports:
+
+- %c
+- %s
+- %%
+
+-------------------------------------------------------------
+## 5. Flags, Field Width and Precision
+
+List of **supported flags**:
+
+- At this step, the function does not support flags. 
+
+List of **unsupported flags**:
+
+- flag characters (+, -, 0, space, #, etc.)
+- field width (e.g. %5d) 
+- precision (e.g. %.3s)
+- length modifiers (h, l, etc.)
+Any of these appearing in the format string are not interpreted.
+
+-------------------------------------------------------------
+## 6. Examples
+
+Example usages of `_printf`:
+
+```c
+_printf("Character: %c\n", 'A');
+_printf("String: %s\n", "Hello");
+_printf("Integer: %d\n", 98);
+_printf("Percent sign: %%\n");
+```
+
+The return values and the global comportment of _printf ant printf
+should be identical if _printf behaves like printf.
+
+Expected output:
+```bash
+Character: A
+String: Hello
+Integer: 98
+Percent sign: %
+```
+
+-------------------------------------------------------------
+## 7. Testing
+
+We test the function by comparing our output with the standard printf:
+- Visual comparison of stdout
+- Comparison of return value (number of printed chars)
+- Edge cases handling
+- Memory safety checked with Valgrind
+
+Example:
+- `valgrind --leak-check=full ./_printf`
+
+-------------------------------------------------------------
+## 8. Flowchart
+
+- Diagram of _printf function will be added here.
+
+-------------------------------------------------------------
+## 9. Man Page
+
+- A man page wil soon be available in the project:
+```bash
+man ./_printf.3
+```
+
+-------------------------------------------------------------
+## 10. Authors
+
+- Pawnee Defize:
+https://github.com/Pawnee33
+- Felix Besancon:
+https://github.com/FelixBesancon
+
+-------------------------------------------------------------
+## 11. Date
+
+November 2025
+
+-------------------------------------------------------------
