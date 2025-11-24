@@ -1,11 +1,11 @@
-========================  README.md  ========================
-
-# _printf – Custom implementation of the C printf function
+-------------------------------------------------------------
+#  README.md
+### `_printf` – Custom implementation of the C printf function
 
 -------------------------------------------------------------
 ## 1. Description
 
-This project is a custom recreation of the standard C `printf` function.
+### This project is a custom recreation of the standard C `printf` function.
 Our implementation handles formatted output, using variadic functions 
 and specific conversion specifiers.
 
@@ -111,9 +111,9 @@ man ./_printf.3
 -------------------------------------------------------------
 ## 10. Authors
 
-- Pawnee Defize
+- Pawnee Defize:
 https://github.com/Pawnee33
-- Felix Besancon
+- Felix Besancon:
 https://github.com/FelixBesancon
 
 -------------------------------------------------------------
@@ -121,4 +121,4 @@ https://github.com/FelixBesancon
 
 November 2025
 
-=============================================================
+-------------------------------------------------------------
