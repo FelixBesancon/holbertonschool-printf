@@ -17,7 +17,7 @@ int main(void)
 	printf("Test : %c %c %c", 'A', 'a', '\n');
 	_printf("Text is string : %s", "this is a string.\n");
 	printf("Text is string : %s", "this is a string.\n");
-	_printf("Let's print an int %d, %i!\n", 12345, -888);
-	printf("Let's print an int %d, %i!\n", 12345, -888);
+	_printf("Let's print an int %d, %i!\n", 12345, -999);
+	printf("Let's print an int %d, %i!\n", 12345, -999);
 	return (0);
 }
