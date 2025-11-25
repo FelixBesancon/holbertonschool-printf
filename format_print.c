@@ -4,7 +4,7 @@
  *
  * Return: Void.
  */
-unsigned int print_char(va_list args)
+int print_char(va_list args)
 {
 	char c = va_arg(args, int);
 
@@ -17,10 +17,9 @@ unsigned int print_char(va_list args)
  *
  * Return: Void.
  */
-unsigned int print_string(va_list args)
+int print_string(va_list args)
 {
-	int i;
-	unsigned int count = 0;
+	int i, count = 0;
 	char *s = va_arg(args, char *);
 
 	if (s != NULL)
@@ -35,15 +34,15 @@ unsigned int print_string(va_list args)
  *
  * Return: The lenght of the integer to print.
  */
-unsigned int print_int(va_list args)
+int print_int(va_list args)
 {
-	int i = va_arg(args, int);
-	unsigned int count = 0;
+	int i = va_arg(args, int), j;
+	int count = 0;
 	int tens = 1;
 
 	if (i < 0)
 	{
-		putchar('-');
+		_putchar('-');
 		count++;
 	}
 	if (i != 0)
@@ -54,14 +53,15 @@ unsigned int print_int(va_list args)
 		for (; tens != 0; tens /= 10)
 		{
 			if (i >= 0)
-				putchar(((i / tens) % 10)+ '0');
+				_putchar(((i / tens) % 10)+ '0');
 			else
-				putchar((-(i / tens) % 10)+ '0');
+				_putchar((-(i / tens) % 10)+ '0');
 		}
 	}
 	else
 	{
-		putchar(i);
+		_putchar(i);
 		count = 1;
 	}
+	return (count);
 }

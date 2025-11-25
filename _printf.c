@@ -8,7 +8,7 @@
 int _printf(const char *format, ...)
 {
 	int i, j;
-	unsigned int count = 0;
+	int count = 0;
 	spec print_to_what[] = {
 		{'c', print_char},
 		{'s', print_string},
@@ -24,8 +24,10 @@ int _printf(const char *format, ...)
 	for (i = 0; format[i] != '\0'; i++)
 	{
 		if (format[i] != '%')
+		{
 			_putchar(format[i]);
 			count++;
+		}
 		else
 		{
 			if (format[i + 1] == '%')
