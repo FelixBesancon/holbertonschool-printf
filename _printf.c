@@ -8,10 +8,12 @@
 int _printf(const char *format, ...)
 {
 	int i, j;
-	char sp;
+	int count = 0;
 	spec print_to_what[] = {
 		{'c', print_char},
 		{'s', print_string},
+		{'d', print_int},
+		{'i', print_int},
 		{0, NULL},
 	};
 	va_list args;
@@ -22,25 +24,27 @@ int _printf(const char *format, ...)
 	for (i = 0; format[i] != '\0'; i++)
 	{
 		if (format[i] != '%')
+		{
 			_putchar(format[i]);
+			count++;
+		}
 		else
 		{
-			sp = format[i + 1];
-			if (sp == '%')
+			if (format[i + 1] == '%')
 			{
 				_putchar('%');
 					i++;
 			}
 			for (j = 0; print_to_what[j].type != 0; j++)
 			{
-				if (sp == print_to_what[j].type)
+				if (format[i + 1] == print_to_what[j].type)
 				{
-					print_to_what[j].print_format(args);
+					count +=print_to_what[j].print_format(args);
 					i++;
 				}
 			}
 		}
 	}
 	va_end(args);
-	return (i);
+	return (count);
 }
