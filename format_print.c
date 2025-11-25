@@ -1,14 +1,15 @@
 #include "main.h"
- * print_char - Prints a single character.
+/** print_char - Prints a single character.
  * @args: The character to print.
  *
  * Return: Void.
  */
-void print_char(va_list args)
+unsigned int print_char(va_list args)
 {
 	char c = va_arg(args, int);
 
 	_putchar(c);
+	return (1);
 }
 /**
  * print_string - Prints a string of characters.
@@ -16,14 +17,33 @@ void print_char(va_list args)
  *
  * Return: Void.
  */
-void print_string(va_list args)
+unsigned int print_string(va_list args)
 {
 	int i;
+	unsigned int count = 0;
 	char *s = va_arg(args, char *);
 
 	if (s != NULL)
 	{
-		for (i = 0; s[i] != '\0'; i++)
+		for (i = 0; s[i] != '\0'; i++, count++)
 			_putchar(s[i]);
 	}
+	return (count);
+}
+/** print_int - Prints an integer.
+ * @args: The integer to print.
+ *
+ * Return: The lenght of the integer to print.
+ */
+unsigned int print_int(va_list args)
+{
+	int i = va_arg(args, int);
+	unsigned int count = 0;
+	int tens = 1;
+
+	if (i < 0)
+		_putchar('-');
+	while (i / tens != 0)
+		tens *= 10;
+	return (count);
 }
