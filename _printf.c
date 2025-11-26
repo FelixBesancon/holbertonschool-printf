@@ -10,14 +10,13 @@ int _printf(const char *format, ...)
 	int index, index_2, count = 0, found;
 	spec print_to_what[] = {
 		{'c', print_char}, {'s', print_string},
-		{'d', print_int}, {'index', print_int},
-		{0, NULL},
+		{'d', print_int}, {'i', print_int},	{0, NULL},
 	};
 	va_list args;
 
-	va_start(args, format);
 	if (format == NULL)
 		return (-1);
+	va_start(args, format);
 	for (index = 0; format[index] != '\0'; index++)
 	{
 		found = 0;
@@ -38,7 +37,10 @@ int _printf(const char *format, ...)
 			if (found == 0)
 			{
 				if (format[index + 1] == '\0')
+				{
+					va_end(args);
 					return (-1);
+				}
 				_putchar(format[index]), count++;
 			}
 		}
