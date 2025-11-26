@@ -7,10 +7,10 @@
  */
 int _printf(const char *format, ...)
 {
-	int i, j, count = 0, found;
+	int index, index_2, count = 0, found;
 	spec print_to_what[] = {
 		{'c', print_char}, {'s', print_string},
-		{'d', print_int}, {'i', print_int},
+		{'d', print_int}, {'index', print_int},
 		{0, NULL},
 	};
 	va_list args;
@@ -18,28 +18,28 @@ int _printf(const char *format, ...)
 	va_start(args, format);
 	if (format == NULL)
 		return (-1);
-	for (i = 0; format[i] != '\0'; i++)
+	for (index = 0; format[index] != '\0'; index++)
 	{
 		found = 0;
-		if (format[i] != '%')
-		{ _putchar(format[i]), count++; }
+		if (format[index] != '%')
+		{ _putchar(format[index]), count++; }
 		else
 		{
-			if (format[i + 1] == '%')
-			{ _putchar('%'), found = 1, i++, count++; }
-			for (j = 0; found != 1 && print_to_what[j].type != 0; j++)
+			if (format[index + 1] == '%')
+			{ _putchar('%'), found = 1, index++, count++; }
+			for (index_2 = 0; found != 1 && print_to_what[index_2].type != 0; index_2++)
 			{
-				if (format[i + 1] == print_to_what[j].type)
+				if (format[index + 1] == print_to_what[index_2].type)
 				{
-					count += print_to_what[j].print_format(args);
-					found = 1, i++;
+					count += print_to_what[index_2].print_format(args);
+					found = 1, index++;
 				}
 			}
 			if (found == 0)
 			{
-				if (format[i + 1] == '\0')
+				if (format[index + 1] == '\0')
 					return (-1);
-				_putchar(format[i]), count++;
+				_putchar(format[index]), count++;
 			}
 		}
 	}
