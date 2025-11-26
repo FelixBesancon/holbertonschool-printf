@@ -44,6 +44,8 @@ Our implementation currently supports:
 - %c
 - %s
 - %%
+- %d
+- %i
 
 -------------------------------------------------------------
 ## 5. Flags, Field Width and Precision
@@ -67,8 +69,8 @@ Example usages of `_printf`:
 
 ```c
 _printf("Character: %c\n", 'A');
-_printf("String: %s\n", "Hello");
-_printf("Integer: %d\n", 98);
+_printf("String: %s\n", "Hello!");
+_printf("Integer: %d, %i\n", 98, -98765);
 _printf("Percent sign: %%\n");
 ```
 
@@ -78,8 +80,8 @@ should be identical if _printf behaves like printf.
 Expected output:
 ```bash
 Character: A
-String: Hello
-Integer: 98
+String: Hello!
+Integer: 98, -98765
 Percent sign: %
 ```
 
@@ -98,12 +100,79 @@ Example:
 -------------------------------------------------------------
 ## 8. Flowchart
 
-- Diagram of _printf function will be added here.
+![Flowchart of _printf](file:///C:/Users/fbesa/Downloads/Project_printf.drawio.svg)
+```Mermaid
+flowchart TD
+
+    %% --- Entry & declarations ---
+
+    A([Start]) --> B["int _printf(const char *format, ...);"]
+    B --> C["Declare: index, index_2, found, count = 0, va_list args"]
+    C --> D{format == NULL ?}
+
+    D -->|YES| E[/"return (-1)"/]
+    D -->|NO| F["va_start(args, format); index = 0"]
+
+    %% --- Main loop on format[index] ---
+
+    F --> G{format[index] == '\0' ?}
+
+    G -->|YES| H["va_end(args)"]
+    H --> I[/"return (count)"/]
+
+    G -->|NO| J["found = 0"]
+
+    J --> K{format[index] == '%' ?}
+
+    %% --- Case: normal character (not '%') ---
+
+    K -->|NO| L["_putchar(format[index])"]
+    L --> M["count++"]
+    M --> N["index++"]
+    N --> G
+
+    %% --- Case: '%' found ---
+
+    K -->|YES| O{format[index+1] == '%' ?}
+
+    %% --- Case: '%%' ---
+
+    O -->|YES| P["_putchar('%')"]
+    P --> Q["found = 1"]
+    Q --> R["count++"]
+    R --> S["index++"]
+    S --> G
+
+    %% --- Case: '%' + potential specifier ---
+
+    O -->|NO| T["index_2 = 0"]
+
+    T --> U{"format[index+1] == specifier[index_2]<br/>AND found == 0 ?"}
+    U -->|YES| V["call _print_to_what for specifier[index_2]"]
+    V --> W["count += printed_elements"]
+    W --> X["found = 1"]
+    X --> AA["index_2++"]
+    AA --> U
+
+    %% --- No match yet: reached end of specifier list? ---
+
+    U -->|NO| Y{"specifier[index_2] == '\\0'<br/>AND found == 0 ?"}
+    Y -->|NO| AA
+
+    %% --- No specifier matched: invalid sequence after '%' ---
+
+    Y -->|YES| Z{"format[index+1] == '\\0' ?"}
+    Z -->|YES| E2[/"return (-1)"/]
+    Z -->|NO| L2["_putchar(format[index])"]
+    L2 --> M2["count++"]
+    M2 --> N2["index++"]
+    N2 --> G
+```
 
 -------------------------------------------------------------
 ## 9. Man Page
 
-- A man page wil soon be available in the project:
+- A man page is available with the project:
 ```bash
 man ./_printf.3
 ```
