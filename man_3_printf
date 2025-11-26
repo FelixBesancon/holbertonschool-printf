@@ -1,0 +1,48 @@
+.TH _PRINTF 3 "November 2025" "" "_PRINTF 3 MANUAL"
+.SH NAME
+
+_printf \- prints output according to a format.
+
+.SH SYNOPSIS
+
+#include "main.h"
+
+int _printf(const char *format, ...);
+
+.SH DESCRIPTION
+
+_printf reads the format string and recognizes specifiers 'c', 's', 'd', 'i' that prints their result and returns the number of printed characters.
+
+.SH RETURN VALUE
+
+_printf returns the number of characters printed.
+It returns -1 if the format is null and if % is alone.
+
+.SH FORMAT
+_printf handles the following format specifiers:
+.TP
+%c:
+prints a character.
+.TP
+%s:
+prints a string.
+.TP
+%d:
+prints an integer.
+.TP
+%i:
+prints an integer.
+
+.SH EXAMPLES
+
+.TP
+_printf("HOLBERTON : actual digital school is the  %s\n", "BEST!!!");
+Prints: HOLBERTON : actual digital school is the BEST!!!
+
+.SH SEE ALSO
+
+printf(3), puts(3), write(2)
+
+.SH AUTHORS
+
+BESANÇON Félix, DEFIZE Pawnee
