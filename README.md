@@ -5,9 +5,11 @@
 -------------------------------------------------------------
 ## 1. Description
 
-### This project is a custom recreation of the standard C `printf` function.
-Our implementation handles formatted output, using variadic functions 
-and specific conversion specifiers.
+### This project is a custom recreation of the C standard library
+function: `printf`.
+Our implementation handles formatted output, using variadic functions,
+recursion and specific conversion specifiers.
+Its purpose is to understand how such a function works internally/
 
 We describe here:
 - What the `_printf` function supports.
@@ -33,7 +35,7 @@ To compile all source files:
 - No more than 5 functions per file
 - No use of the `switch` keyword
 - Use of variadic functions (`stdarg.h`)
-- The code uses the Betty style
+- The code follows the Betty coding style
 - Project written in C following the Holberton School style guidelines
 
 -------------------------------------------------------------
@@ -74,8 +76,8 @@ _printf("Integer: %d, %i\n", 98, -98765);
 _printf("Percent sign: %%\n");
 ```
 
-The return values and the global comportment of _printf ant printf
-should be identical if _printf behaves like printf.
+The return values and the overall behaviour of _printf should match
+the standard printf function whenever it is possible.
 
 Expected output:
 ```bash
@@ -95,12 +97,12 @@ We test the function by comparing our output with the standard printf:
 - Memory safety checked with Valgrind
 
 Example:
-- `valgrind --leak-check=full ./_printf`
+- `valgrind --leak-check=full ./a.out`
 
 -------------------------------------------------------------
 ## 8. Flowchart
 
-![Flowchart of _printf](file:///C:/Users/fbesa/Downloads/Project_printf.drawio.svg)
+![Flowchart of _printf](Project_printf.drawio.svg)
 ```Mermaid
 flowchart TD
 
@@ -180,10 +182,10 @@ man ./_printf.3
 -------------------------------------------------------------
 ## 10. Authors
 
-- Pawnee Defize:
-https://github.com/Pawnee33
-- Felix Besancon:
-https://github.com/FelixBesancon
+- **Pawnee Defize**
+  GitHub: https://github.com/Pawnee33
+- **Felix Besancon**
+  Github: https://github.com/FelixBesancon
 
 -------------------------------------------------------------
 ## 11. Date
