@@ -1,5 +1,6 @@
 #include "main.h"
-/** print_char - Prints a single character.
+/**
+ * print_char - Prints a single character.
  * @args: The character to print.
  *
  * Return: Void.
@@ -29,12 +30,14 @@ int print_string(va_list args)
 	}
 	return (count);
 }
-/** print_int - Prints an integer.
+/**
+ * print_int - Prints an integer.
  * @args: The integer to print.
  *
  * Return: The lenght of the integer to print.
- */
-int print_int(va_list args)
+*/
+/*
+ * int print_int(va_list args)
 {
 	int i = va_arg(args, int), j;
 	int count = 0;
@@ -65,3 +68,4 @@ int print_int(va_list args)
 	}
 	return (count);
 }
+*/

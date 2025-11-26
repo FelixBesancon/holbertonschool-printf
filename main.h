@@ -1,9 +1,17 @@
-#include <stdlib.h>
-#include <stdarg.h>
 
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <stdlib.h>
+#include <stdarg.h>
+#include <limits.h>
+/**
+* struct specifier - the structure combines format
+* and a printing function
+* @type: stock the characters to check
+* @print_format: pointer function handles the
+* type of characters
+*/
 typedef struct specifier
 {
 	char type;

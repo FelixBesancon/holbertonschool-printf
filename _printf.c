@@ -7,8 +7,7 @@
  */
 int _printf(const char *format, ...)
 {
-	int i, j;
-	int count = 0;
+	int i, j, count = 0;
 	spec print_to_what[] = {
 		{'c', print_char},
 		{'s', print_string},
@@ -34,12 +33,13 @@ int _printf(const char *format, ...)
 			{
 				_putchar('%');
 					i++;
+					count++;
 			}
 			for (j = 0; print_to_what[j].type != 0; j++)
 			{
 				if (format[i + 1] == print_to_what[j].type)
 				{
-					count +=print_to_what[j].print_format(args);
+					count += print_to_what[j].print_format(args);
 					i++;
 				}
 			}
