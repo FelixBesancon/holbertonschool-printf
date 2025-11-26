@@ -12,6 +12,7 @@ int print_char(va_list args)
 	_putchar(c);
 	return (1);
 }
+
 /**
  * print_string - Prints a string of characters.
  * @args: The string to print.
@@ -30,42 +31,50 @@ int print_string(va_list args)
 	}
 	return (count);
 }
+
+/**
+* print_int_rec - Prints positive numbers recursively.
+* @i: The number to print.
+*
+* Return: the lenght of number to prints
+*/
+int print_int_rec(int i)
+{
+	int count;
+
+	if (i < 10)
+	{
+		_putchar('0' + i);
+		return (1);
+	}
+	count = print_int_rec(i / 10);
+	_putchar('0' + (i % 10));
+	return (count + 1);
+}
 /**
  * print_int - Prints an integer.
  * @args: The integer to print.
  *
  * Return: The lenght of the integer to print.
-*/
-/*
- * int print_int(va_list args)
+ */
+int print_int(va_list args)
 {
-	int i = va_arg(args, int), j;
+	int i = va_arg(args, int);
 	int count = 0;
-	int tens = 1;
 
+	if (i == INT_MIN)
+	{
+		_putchar('-');
+		_putchar('2');
+		count = print_int_rec(147483648);
+		return (count + 2);
+	}
 	if (i < 0)
 	{
 		_putchar('-');
+		i = -i;
 		count++;
 	}
-	if (i != 0)
-	{
-		j = i / 10;
-		for (; j / tens != 0; count++)
-			tens *= 10;
-		for (; tens != 0; tens /= 10)
-		{
-			if (i >= 0)
-				_putchar(((i / tens) % 10)+ '0');
-			else
-				_putchar((-(i / tens) % 10)+ '0');
-		}
-	}
-	else
-	{
-		_putchar(i);
-		count = 1;
-	}
+	count += print_int_rec(i);
 	return (count);
 }
-*/

@@ -9,15 +9,28 @@
  */
 int main(void)
 {
-	_printf("Let's try to printf a %%!\n");
-	printf("Let's try to printf a %%!\n");
-	_printf("Let's try to printf a simple sentence.\n");
-	printf("Let's try to printf a simple sentence.\n");
-	_printf("Test : %c %c %c", 'A', 'a', '\n');
-	printf("Test : %c %c %c", 'A', 'a', '\n');
-	_printf("Text is string : %s", "this is a string.\n");
-	printf("Text is string : %s", "this is a string.\n");
-	_printf("Let's print an int %d, %i!\n", 12345, -999);
-	printf("Let's print an int %d, %i!\n", 12345, -999);
+	int a, b;
+
+	a = _printf("Let's try to printf a %%!\n");
+	b = printf("Let's try to printf a %%!\n");
+	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
+	a = _printf("Let's try to printf a simple sentence.\n");
+	b = printf("Let's try to printf a simple sentence.\n");
+	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
+	a = _printf("Test : %c %c %c", 'A', 'a', '\n');
+	b = printf("Test : %c %c %c", 'A', 'a', '\n');
+	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
+	a = _printf("Text is string : %s", "this is a string.\n");
+	b = printf("Text is string : %s", "this is a string.\n");
+	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
+	a = _printf("Let's print an int %d, %i, %d!\n", 12345, -999, 595959);
+	b = printf("Let's print an int %d, %i, %d!\n", 12345, -999, 595959);
+	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
+	a = _printf("Let's print int min %d and int max %d!\n", INT_MIN, INT_MAX);
+	b = printf("Let's print int min %d and int max %d!\n", INT_MIN, INT_MAX);
+	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
+	a = _printf("iddi%diddiiddi\n", 1024);
+	b = printf("iddi%diddiiddi\n", 1024);
+	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
 	return (0);
 }
