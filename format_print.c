@@ -21,13 +21,18 @@ int print_char(va_list args)
  */
 int print_string(va_list args)
 {
-	int i, count = 0;
-	char *s = va_arg(args, char *);
+	int count = 0;
+	char *s = va_arg(args, char *), *null_string = "(null)";
 
-	if (s != NULL)
+	if (s == NULL)
 	{
-		for (i = 0; s[i] != '\0'; i++, count++)
-			_putchar(s[i]);
+		for (; *null_string != '\0'; null_string++, count++)
+			_putchar(*null_string);
+	}
+	else
+	{
+		for (; *s != '\0'; s++, count++)
+			_putchar(*s);
 	}
 	return (count);
 }

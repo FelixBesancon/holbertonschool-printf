@@ -32,5 +32,17 @@ int main(void)
 	a = _printf("iddi%diddiiddi\n", 1024);
 	b = printf("iddi%diddiiddi\n", 1024);
 	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
+	a = _printf("Test a null string: %s\n", (char *)0);
+	b = printf("Test a null string: %s\n", (char *)0);
+	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
+	a = _printf("%");
+	b = printf("%");
+	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
+	a = _printf("%!\n");
+	b = printf("%!\n");
+	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
+	a = _printf("%K\n");
+	b = printf("%K\n");
+	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
 	return (0);
 }
