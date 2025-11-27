@@ -11,7 +11,7 @@ int _printf(const char *format, ...);
 
 .SH DESCRIPTION
 
-_printf reads the format string and recognizes specifiers 'c', 's', 'd', 'i' that prints their result and returns the number of printed characters.
+_printf reads the format string and recognizes specifiers 'c', 's', '%', 'd', 'i' that prints their result and returns the number of printed characters.
 
 .SH RETURN VALUE
 
@@ -26,6 +26,9 @@ prints a character.
 .TP
 %s:
 prints a string.
+.TP
+%%:
+prints a percent.
 .TP
 %d:
 prints an integer.

@@ -14,7 +14,8 @@ int print_char(va_list args)
 }
 
 /**
- * print_string - Prints a string of characters.
+ * print_string - Prints a string of characters, prints (null)
+ * if the string is NULL.
  * @args: The string to print.
  *
  * Return: The length of the string to print.
