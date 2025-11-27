@@ -10,7 +10,8 @@ int _printf(const char *format, ...)
 	int index, index_2, count = 0, found;
 	spec print_to_what[] = {
 		{'c', print_char}, {'s', print_string}, {'%', print_percent},
-		{'d', print_int}, {'i', print_int},	{0, NULL},
+		{'d', print_int}, {'i', print_int}, {'b', print_binary},
+		{0, NULL},
 	};
 	va_list args;
 

@@ -44,8 +44,11 @@ int main(void)
 	a = _printf("%K\n");
 	b = printf("%K\n");
 	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
-	a = _printf("Let's printf a %% insi%%de %s!\n", "a sentence");
-	b = printf("Let's printf a %% insi%%de %s!\n", "a sentence");
+	a = _printf("Let's print a %% insi%%de %s!\n", "a sentence");
+	b = printf("Let's print a %% insi%%de %s!\n", "a sentence");
+	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
+	a = _printf("Let's print a binary number %b and %b.\n", 17, 98);
+	b = printf("Let's print a binary number %b and %b.\n", 17, 98);
 	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
 	return (0);
 }
