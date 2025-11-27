@@ -1,4 +1,5 @@
 #include "main.h"
+
 /**
  * print_char - Prints a single character.
  * @args: The character to print.
@@ -70,6 +71,7 @@ int print_int_rec(int i)
 	_putchar('0' + (i % 10));
 	return (count + 1);
 }
+
 /**
  * print_int - Prints an integer.
  * @args: The integer to print.
