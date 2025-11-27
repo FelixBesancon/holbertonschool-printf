@@ -53,5 +53,8 @@ int main(void)
 	a = _printf("Let's print two great unsigned int : %u and %u.\n", 5555555555, -1234);
 	b = printf("Let's print two great unsigned int : %u and %u.\n", 5555555555, -1234);
 	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
+	a = _printf("Let's print an unsigned int in octal : %o and %o.\n", 5555555555, -1234);
+	b = printf("Let's print an unsigned int in octal : %o and %o.\n", 5555555555, -1234);
+	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
 	return (0);
 }

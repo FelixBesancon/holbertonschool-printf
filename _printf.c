@@ -11,7 +11,7 @@ int _printf(const char *format, ...)
 	spec print_to_what[] = {
 		{'c', print_char}, {'s', print_string}, {'%', print_percent},
 		{'d', print_int}, {'i', print_int}, {'b', print_binary},
-		{'u', print_uint},
+		{'u', print_uint}, {'o', print_octal},
 		{0, NULL},
 	};
 	va_list args;
