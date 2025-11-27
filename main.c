@@ -14,8 +14,8 @@ int main(void)
 	a = _printf("Let's try to printf a %%!\n");
 	b = printf("Let's try to printf a %%!\n");
 	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
-	a = _printf("Let's try to printf a simple sentence.\n");
-	b = printf("Let's try to printf a simple sentence.\n");
+	a = _printf("Let's try to printf a simple sentence%%.\n");
+	b = printf("Let's try to printf a simple sentence%%.\n");
 	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
 	a = _printf("Test : %c %c %c", 'A', 'a', '\n');
 	b = printf("Test : %c %c %c", 'A', 'a', '\n');
@@ -43,6 +43,9 @@ int main(void)
 	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
 	a = _printf("%K\n");
 	b = printf("%K\n");
+	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
+	a = _printf("Let's printf a %% insi%%de %s!\n", "a sentence");
+	b = printf("Let's printf a %% insi%%de %s!\n", "a sentence");
 	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
 	return (0);
 }

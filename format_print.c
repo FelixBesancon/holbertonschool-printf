@@ -3,7 +3,7 @@
  * print_char - Prints a single character.
  * @args: The character to print.
  *
- * Return: Void.
+ * Return: Always 1.
  */
 int print_char(va_list args)
 {
@@ -17,7 +17,7 @@ int print_char(va_list args)
  * print_string - Prints a string of characters.
  * @args: The string to print.
  *
- * Return: Void.
+ * Return: The length of the string to print.
  */
 int print_string(va_list args)
 {
@@ -35,6 +35,19 @@ int print_string(va_list args)
 			_putchar(*s);
 	}
 	return (count);
+}
+
+/**
+ * print_percent - Prints a '%' character.
+ * @args: The character '%'.
+ *
+ * Return: Always 1.
+ */
+int print_percent(va_list args)
+{
+	(void)args;
+	_putchar('%');
+	return (1);
 }
 
 /**
