@@ -50,8 +50,8 @@ int main(void)
 	a = _printf("Let's print a binary number %b and %b.\n", 17, 98);
 	b = printf("Let's print a binary number %b and %b.\n", 17, 98);
 	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
-	a = _printf("Let's print an great signed int : %b.\n", 95135764);
-	b = printf("Let's print an great signed int : %b.\n", 95135764);
+	a = _printf("Let's print two great unsigned int : %u and %u.\n", 5555555555, -1234);
+	b = printf("Let's print two great unsigned int : %u and %u.\n", 5555555555, -1234);
 	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
 	return (0);
 }

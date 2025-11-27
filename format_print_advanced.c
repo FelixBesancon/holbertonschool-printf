@@ -36,3 +36,39 @@ int print_binary(va_list args)
 	}
 	return (print_binary_rec(b));
 }
+
+/**
+* print_uint_rec - Prints positive numbers recursively.
+* @u: The number to print.
+*
+* Return: the lenght of number to prints
+*/
+int print_uint_rec(unsigned int u)
+{
+	int count;
+
+	if (u < 10)
+	{
+		_putchar('0' + u);
+		return (1);
+	}
+	count = print_uint_rec(u / 10);
+	_putchar('0' + (u % 10));
+	return (count + 1);
+}
+
+/**
+ * print_uint - Prints an integer.
+ * @args: The unsigned integer to print.
+ *
+ * Return: The lenght of the unsigned integer
+ * to print.
+ */
+int print_uint(va_list args)
+{
+	int u = va_arg(args, unsigned int);
+	int count = 0;
+
+	count += print_uint_rec(u);
+	return (count);
+}
