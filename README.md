@@ -102,7 +102,7 @@ Example:
 -------------------------------------------------------------
 ## 8. Flowchart
 
-![Flowchart of _printf](Project_printf.drawio.svg)
+![Flowchart of _printf](Project_printf.svg)
 ```Mermaid
 flowchart TD
 
