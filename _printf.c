@@ -9,7 +9,7 @@ int _printf(const char *format, ...)
 {
 	int index, index_2, count = 0, found;
 	spec print_to_what[] = {
-		{'c', print_char}, {'s', print_string},
+		{'c', print_char}, {'s', print_string}, {'%', print_percent},
 		{'d', print_int}, {'i', print_int},	{0, NULL},
 	};
 	va_list args;
@@ -24,8 +24,6 @@ int _printf(const char *format, ...)
 		{ _putchar(format[index]), count++; }
 		else
 		{
-			if (format[index + 1] == '%')
-			{ _putchar('%'), found = 1, index++, count++; }
 			for (index_2 = 0; found != 1 && print_to_what[index_2].type != 0; index_2++)
 			{
 				if (format[index + 1] == print_to_what[index_2].type)
