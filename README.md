@@ -106,69 +106,68 @@ Example:
 ```Mermaid
 flowchart TD
 
-    %% --- Entry & declarations ---
-
-    A([Start]) --> B["int _printf(const char *format, ...);"]
-    B --> C["Declare: index, index_2, found, count = 0, va_list args"]
+    %% --- Entry & setup ---
+    A([Start]) --> B[_printf(const char *format, ...)]
+    B --> C[Declare:<br/>int index, index_2, found<br/>int count = 0<br/>va_list args]
     C --> D{format == NULL ?}
+    D -- Yes --> E[[return -1]]
+    D -- No --> F[va_start(args, format)<br/>index = 0]
 
-    D -->|YES| E[/"return (-1)"/]
-    D -->|NO| F["va_start(args, format); index = 0"]
+    %% --- Main loop on format string ---
+    F --> G{format[index] == '\\0' ?}
+    G -- Yes --> H[va_end(args)]
+    H --> I[[return count]]
 
-    %% --- Main loop on format[index] ---
-
-    F --> G{format[index] == '\0' ?}
-
-    G -->|YES| H["va_end(args)"]
-    H --> I[/"return (count)"/]
-
-    G -->|NO| J["found = 0"]
-
+    G -- No --> J[found = 0]
     J --> K{format[index] == '%' ?}
 
-    %% --- Case: normal character (not '%') ---
-
-    K -->|NO| L["_putchar(format[index])"]
-    L --> M["count++"]
-    M --> N["index++"]
+    %% --- Normal character (not a '%') ---
+    K -- No --> L[_putchar(format[index])]
+    L --> M[count++]
+    M --> N[index++]
     N --> G
 
-    %% --- Case: '%' found ---
+    %% --- '%' found: check specifier table ---
+    K -- Yes --> O[index_2 = 0]
 
-    K -->|YES| O{format[index+1] == '%' ?}
+    %% Loop over specifier table
+    O --> P{format[index + 1] ==<br/>specifier[index_2].type<br/>&& found == 0 ?}
 
-    %% --- Case: '%%' ---
+    %% Matching specifier
+    P -- Yes --> Q[Call specifier[index_2].print_format(args)]
+    Q --> R[count += number of<br/>printed characters<br/>found = 1]
+    R --> S[index++<br/>(skip specifier char)]
+    S --> T[index++<br/>(for loop increment)]
+    T --> G
 
-    O -->|YES| P["_putchar('%')"]
-    P --> Q["found = 1"]
-    Q --> R["count++"]
-    R --> S["index++"]
-    S --> G
+    %% No match yet: move to next specifier
+    P -- No --> U{specifier[index_2].type == 0<br/>&& found == 0 ?}
 
-    %% --- Case: '%' + potential specifier ---
+    %% Still specifiers left: continue loop
+    U -- No --> V[index_2++]
+    V --> P
 
-    O -->|NO| T["index_2 = 0"]
+    %% End of specifier table and none matched
+    U -- Yes --> W{format[index + 1] == '\\0' ?}
 
-    T --> U{"format[index+1] == specifier[index_2]<br/>AND found == 0 ?"}
-    U -->|YES| V["call _print_to_what for specifier[index_2]"]
-    V --> W["count += printed_elements"]
-    W --> X["found = 1"]
-    X --> AA["index_2++"]
-    AA --> U
+    %% Error: '%' is last character
+    W -- Yes --> H1[va_end(args)]
+    H1 --> E1[[return -1]]
 
-    %% --- No match yet: reached end of specifier list? ---
+    %% Print '%' literally if next char exists
+    W -- No --> X[_putchar(format[index])]
+    X --> Y[count++]
+    Y --> N
 
-    U -->|NO| Y{"specifier[index_2] == '\\0'<br/>AND found == 0 ?"}
-    Y -->|NO| AA
-
-    %% --- No specifier matched: invalid sequence after '%' ---
-
-    Y -->|YES| Z{"format[index+1] == '\\0' ?"}
-    Z -->|YES| E2[/"return (-1)"/]
-    Z -->|NO| L2["_putchar(format[index])"]
-    L2 --> M2["count++"]
-    M2 --> N2["index++"]
-    N2 --> G
+    %% --- Legend: specifier table content ---
+    subgraph Specifier_Table [Specifier table (conceptual)]
+        ST1[specifier[0] = 'c' → print_char]
+        ST2[specifier[1] = 's' → print_string]
+        ST3[specifier[2] = 'd' → print_int]
+        ST4[specifier[3] = 'i' → print_int]
+        ST5[specifier[4] = '%' → print_percent]
+        ST6[specifier[5].type = 0 → end marker]
+    end
 ```
 
 -------------------------------------------------------------
