@@ -40,7 +40,7 @@ int print_octal(va_list args)
 /**
 * print_hexa_rec - Prints recursively an unsigned int
 * converted into hexadecimal.
-* @o: The unsigned int to convert and print.
+* @x: The unsigned int to convert and print.
 *
 * Return: The length of the number printed.
 */

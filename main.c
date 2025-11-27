@@ -59,5 +59,8 @@ int main(void)
 	a = _printf("Let's print an unsigned int in hexadecimal : %x and %x.\n", 5555555555, 15);
 	b = printf("Let's print an unsigned int in hexadecimal : %x and %x.\n", 5555555555, 15);
 	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
+	_printf("Let's print an unsigned int in hexadecimal : %X and %X.\n", 5555555555, 15);
+	b = printf("Let's print an unsigned int in hexadecimal : %X and %X.\n", 5555555555, 15);
+	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
 	return (0);
 }
