@@ -1,4 +1,5 @@
 #include "main.h"
+
 /**
  * print_char - Prints a single character.
  * @args: The character to print.
@@ -70,6 +71,7 @@ int print_int_rec(int i)
 	_putchar('0' + (i % 10));
 	return (count + 1);
 }
+
 /**
  * print_int - Prints an integer.
  * @args: The integer to print.
@@ -96,40 +98,4 @@ int print_int(va_list args)
 	}
 	count += print_int_rec(i);
 	return (count);
-}
-
-/**
-* print_binary_rec - Prints recursively an unsigned int
-* converted into binary.
-* @b: The unsigned int to convert and print.
-*
-* Return: The number of '1' and '0' printed.
-*/
-unsigned int print_binary_rec(unsigned int b)
-{
-	int count = 0;
-	if (b == 0)
-		return (0);
-	count = print_binary_rec(b / 2);
-	_putchar('0' + (b % 2));
-	return (count + 1);
-}
-
-/**
-* print_binary - Prints an unsigned int converted
-* into binary.
-* @args: The unsigned int to convert and print.
-* 
-* Return: The number of '1' and '0' printed.
-*/
-int print_binary(va_list args)
-{
-	unsigned int b = va_arg(args, unsigned int);
-
-	if (b == 0)
-	{
-		_putchar ('0');
-		return (1);
-	}
-	return(print_binary_rec(b));
 }
