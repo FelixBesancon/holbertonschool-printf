@@ -1,11 +1,12 @@
 #include "main.h"
 
 /**
- * _putchar - Writes the character 'c' to stdout.
- * @c: The character to print
+ * print_buffer - Adds a character to the buffer and flushes it if full.
+ * @c: The character to add to the buffer.
+ * @buffer: The buffer storing characters before writing.
+ * @add: Pointer to the index of the next free position in the buffer.
  *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
+ * Return: Always 1 (success).
  */
 int print_buffer(char c, char *buffer, int *add)
 {
