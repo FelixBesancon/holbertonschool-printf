@@ -65,8 +65,8 @@ int main(void)
 	a = _printf("Let's print a special string : %S\n", "~ Why\nNot!\n");
 	b = printf("Let's print a special string : %S\n", "~ Why\nNot!\n");
 	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
-	a = _printf("%S\n", "Best\nSchool");
-	b = _printf("%s\n", "Best\nSchool");
-	printf("_printf is : %d\nAnd : %d\n", a, b);
+	a = _printf("%p\n", (void *)0x7fff5100b608);
+	b = printf("%p\n", (void *)0x7fff5100b608);
+	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
 	return (0);
 }
