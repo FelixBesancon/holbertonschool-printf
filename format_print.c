@@ -6,11 +6,11 @@
  *
  * Return: Always 1.
  */
-int print_char(va_list args)
+int print_char(va_list args, char *buffer, int *add)
 {
 	char c = va_arg(args, int);
 
-	_putchar(c);
+    print_buffer(buffer, add, c);
 	return (1);
 }
 
@@ -21,7 +21,7 @@ int print_char(va_list args)
  *
  * Return: The length of the string to print.
  */
-int print_string(va_list args)
+int print_string(va_list args, char *buffer, int *add)
 {
 	int count = 0;
 	char *s = va_arg(args, char *), *null_string = "(null)";
@@ -29,12 +29,12 @@ int print_string(va_list args)
 	if (s == NULL)
 	{
 		for (; *null_string != '\0'; null_string++, count++)
-			_putchar(*null_string);
+			print_buffer(buffer, add, *null_string);
 	}
 	else
 	{
 		for (; *s != '\0'; s++, count++)
-			_putchar(*s);
+			print_buffer(buffer, add, *s);
 	}
 	return (count);
 }
@@ -45,10 +45,10 @@ int print_string(va_list args)
  *
  * Return: Always 1.
  */
-int print_percent(va_list args)
+int print_percent(va_list args, char *buffer, int *add)
 {
 	(void)args;
-	_putchar('%');
+	print_buffer(buffer, add, '%');
 	return (1);
 }
 
@@ -58,17 +58,17 @@ int print_percent(va_list args)
 *
 * Return: the lenght of number to prints
 */
-int print_int_rec(int i)
+int print_int_rec(int i, char *buffer, int *add)
 {
 	int count;
 
 	if (i < 10)
 	{
-		_putchar('0' + i);
+		print_buffer(buffer, add, '0' + i);
 		return (1);
 	}
-	count = print_int_rec(i / 10);
-	_putchar('0' + (i % 10));
+	count = print_int_rec(i / 10, buffer, add);
+	print_buffer(buffer, add, '0' + (i % 10));
 	return (count + 1);
 }
 
@@ -78,24 +78,24 @@ int print_int_rec(int i)
  *
  * Return: The lenght of the integer to print.
  */
-int print_int(va_list args)
+int print_int(va_list args, char *buffer, int *add)
 {
 	int i = va_arg(args, int);
 	int count = 0;
 
 	if (i == INT_MIN)
 	{
-		_putchar('-');
-		_putchar('2');
-		count = print_int_rec(147483648);
+		print_buffer(buffer, add, '-');
+		print_buffer(buffer, add, '2');
+		count = print_int_rec(147483648, buffer, add);
 		return (count + 2);
 	}
 	if (i < 0)
 	{
-		_putchar('-');
+		print_buffer(buffer, add, '-');
 		i = -i;
 		count++;
 	}
-	count += print_int_rec(i);
+	count += print_int_rec(i, buffer, add);
 	return (count);
 }

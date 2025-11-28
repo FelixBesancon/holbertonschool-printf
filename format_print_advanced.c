@@ -7,7 +7,7 @@
 *
 * Return: The number of '1' and '0' printed.
 */
-unsigned int print_binary_rec(unsigned int b)
+unsigned int print_binary_rec(unsigned int b, char *buffer, int *add)
 {
 	int count = 0;
 
@@ -25,7 +25,7 @@ unsigned int print_binary_rec(unsigned int b)
 *
 * Return: The number of '1' and '0' printed.
 */
-int print_binary(va_list args)
+int print_binary(va_list args, char *buffer, int *add)
 {
 	unsigned int b = va_arg(args, unsigned int);
 
@@ -43,7 +43,7 @@ int print_binary(va_list args)
 *
 * Return: the lenght of number to prints
 */
-int print_uint_rec(unsigned int u)
+int print_uint_rec(unsigned int u, char *buffer, int *add)
 {
 	int count;
 
@@ -64,11 +64,11 @@ int print_uint_rec(unsigned int u)
  * Return: The lenght of the unsigned integer
  * to print.
  */
-int print_uint(va_list args)
+int print_uint(va_list args, char *buffer, int *add)
 {
 	int u = va_arg(args, unsigned int);
 	int count = 0;
 
-	count += print_uint_rec(u);
+	count += print_uint_rec(u, buffer, add);
 	return (count);
 }

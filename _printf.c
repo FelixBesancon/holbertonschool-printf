@@ -7,7 +7,8 @@
  */
 int _printf(const char *format, ...)
 {
-	int index, index_2, count = 0, found;
+	int index, index_2, count = 0, found, add = 0;
+	char buffer[1024];
 	spec print_to_what[] = {
 		{'c', print_char}, {'s', print_string}, {'%', print_percent},
 		{'d', print_int}, {'i', print_int}, {'b', print_binary}, {'u', print_uint},
@@ -23,14 +24,14 @@ int _printf(const char *format, ...)
 	{
 		found = 0;
 		if (format[index] != '%')
-		{ _putchar(format[index]), count++; }
+		{ print_buffer(format[index], buffer, &add), count++; }
 		else
 		{
 			for (index_2 = 0; found != 1 && print_to_what[index_2].type != 0; index_2++)
 			{
 				if (format[index + 1] == print_to_what[index_2].type)
 				{
-					count += print_to_what[index_2].print_format(args);
+					count += print_to_what[index_2].print_format(args, buffer, &add);
 					found = 1, index++;
 				}
 			}
@@ -41,10 +42,11 @@ int _printf(const char *format, ...)
 					va_end(args);
 					return (-1);
 				}
-				_putchar(format[index]), count++;
+				print_buffer(format[index], buffer, &add), count++;
 			}
 		}
 	}
 	va_end(args);
+	write(1, buffer, add);
 	return (count);
 }
