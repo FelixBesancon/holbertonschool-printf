@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * print_buffer - WStores a character in an output buffer and flushes it
+ * print_buffer - Stores a character in an output buffer and flushes it
  * to stdout when the buffer is full.
  * @c: The character to add to the buffer.
  * @buffer: The buffer used to store characters before writing.
