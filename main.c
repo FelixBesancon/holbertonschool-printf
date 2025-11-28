@@ -72,7 +72,5 @@ int main(void)
 	printf("_printf is : %d\n", a);
 	a = _printf("Text is rot13 : %R\nAnd %R\n", "This is a string.", "Guvf vf n fgevat.");
 	printf("_printf is : %d\n", a);
-	a = _printf("%r", "\nThis sentence is retrieved from va_args!");
-	printf("_printf is : %d\n", a);
 	return (0);
 }
