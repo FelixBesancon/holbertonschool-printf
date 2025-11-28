@@ -42,3 +42,39 @@ int print_HEXA(va_list args)
 	count += print_HEXA_rec(X);
 	return (count);
 }
+
+/**
+ * print_STRING - Prints a string of characters, prints (null)
+ * if the string is NULL, prints '\x' followed by the ASCII code
+ * value of each non printable character.
+ * @args: The string to print.
+ *
+ * Return: The length of the string to print.
+ */
+int print_STRING(va_list args)
+{
+	int count = 0;
+	unsigned int char_S;
+	char *S = va_arg(args, char *), *null_STRING = "(null)";
+
+	if (S == NULL)
+	{
+		for (; *null_STRING != '\0'; null_STRING++, count++)
+			_putchar(*null_STRING);
+	}
+	else
+	{
+		for (; *S != '\0'; S++, count++)
+			if (*S > 31 && *S < 127)
+				_putchar(*S);
+			else
+			{
+				char_S = *S;
+				_putchar('\\'), _putchar('x');
+				if (char_S < 16)
+					{ _putchar('0'), count++; }
+				count += 1 + print_HEXA_rec(char_S);
+			}
+	}
+	return (count);
+}
