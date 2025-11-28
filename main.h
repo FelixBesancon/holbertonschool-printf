@@ -31,5 +31,6 @@ int print_hexa(va_list args);
 int print_HEXA(va_list args);
 int print_STRING(va_list args);
 int print_pointer(va_list args);
+int print_rot13(va_list args);
 
 #endif

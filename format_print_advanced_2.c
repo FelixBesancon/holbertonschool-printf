@@ -7,7 +7,7 @@
 *
 * Return: The length of the number printed.
 */
-unsigned int print_octal_rec(unsigned int o)
+int print_octal_rec(unsigned int o)
 {
 	int count;
 
@@ -44,7 +44,7 @@ int print_octal(va_list args)
 *
 * Return: The length of the number printed.
 */
-unsigned int print_hexa_rec(unsigned int x)
+int print_hexa_rec(unsigned int x)
 {
 	int count;
 
