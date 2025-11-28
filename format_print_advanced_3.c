@@ -7,7 +7,7 @@
 *
 * Return: The length of the number printed.
 */
-unsigned int print_HEXA_rec(unsigned int X)
+int print_HEXA_rec(unsigned int X)
 {
 	int count;
 
@@ -86,7 +86,7 @@ int print_STRING(va_list args)
 *
 * Return: The length of the address printed.
 */
-unsigned long print_adress_rec(unsigned long address)
+int print_adress_rec(unsigned long address)
 {
 	int count;
 

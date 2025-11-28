@@ -68,5 +68,8 @@ int main(void)
 	a = _printf("%p\n", (void *)0x7fff5100b608);
 	b = printf("%p\n", (void *)0x7fff5100b608);
 	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
+	a = _printf("Text is rot13 : %R", "this is a string.\n");
+	b = printf("Text is rot13 : %R", "this is a string.\n");
+	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
 	return (0);
 }
