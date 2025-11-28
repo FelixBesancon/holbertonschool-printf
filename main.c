@@ -68,8 +68,9 @@ int main(void)
 	a = _printf("%p\n", (void *)0x7fff5100b608);
 	b = printf("%p\n", (void *)0x7fff5100b608);
 	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
-	a = _printf("Text is rot13 : %R", "this is a string.\n");
-	b = printf("Text is rot13 : %R", "this is a string.\n");
-	printf("_printf is : %d\nprintf is : %d\n\n", a, b);
+	a = _printf("Text is reversed : %r\nAnd %r\n", "This is a string.", ".gnirts a si sihT");
+	printf("_printf is : %d\n", a);
+	a = _printf("Text is rot13 : %R\nAnd %R\n", "This is a string.", "Guvf vf n fgevat.");
+	printf("_printf is : %d\n", a);
 	return (0);
 }
