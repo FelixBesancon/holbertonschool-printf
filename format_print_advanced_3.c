@@ -46,7 +46,7 @@ int print_HEXA(va_list args)
 /**
  * print_STRING - Prints a string of characters, prints (null)
  * if the string is NULL, prints '\x' followed by the ASCII code
- * value of each non printable character.
+ * value in capital hexadecimal of each non-printable character.
  * @args: The string to print.
  *
  * Return: The length of the string to print.
@@ -75,6 +75,61 @@ int print_STRING(va_list args)
 					{ _putchar('0'), count++; }
 				count += 1 + print_HEXA_rec(char_S);
 			}
+	}
+	return (count);
+}
+
+/**
+* print_adress_rec - Prints recursively an unsigned long
+* converted into hexadecimal.
+* @adress: The unsigned long to convert and print.
+*
+* Return: The length of the adress printed.
+*/
+unsigned long print_adress_rec(unsigned long adress)
+{
+	int count;
+
+	if (adress < 16)
+	{
+		if (adress > 9)
+			_putchar('0' + (adress + 39));
+		else
+			_putchar('0' + adress);
+		return (1);
+	}
+	count = print_adress_rec(adress / 16);
+	if ((adress % 16) > 9)
+		_putchar('0' + ((adress % 16) + 39));
+	else
+		_putchar('0' + (adress % 16));
+	return (count + 1);
+}
+
+/**
+ * print_pointer - Prints the adress of a pointerin hexadecimal,
+ * starting with 'ox', prints '(nil)' if the pointer is NULL.
+ * @args: The adress to print.
+ *
+ * Return: The length of the string to print.
+ */
+int print_pointer(va_list args)
+{
+	int count = 0;
+	char *null_pointer = "(nil)";
+	unsigned long adress;
+	void *p = va_arg(args, void *);
+
+	if (p == NULL)
+	{
+		for (; *null_pointer != '\0'; null_pointer++, count++)
+			_putchar(*null_pointer);
+	}
+	else
+	{
+		adress = (unsigned long)p;
+		_putchar('0'), _putchar('x');
+		count += 2 + print_adress_rec(adress);
 	}
 	return (count);
 }
