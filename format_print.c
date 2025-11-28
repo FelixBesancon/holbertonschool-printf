@@ -10,7 +10,7 @@ int print_char(va_list args, char *buffer, int *add)
 {
 	char c = va_arg(args, int);
 
-    print_buffer(buffer, add, c);
+    print_buffer(c, buffer, add);
 	return (1);
 }
 
@@ -29,12 +29,12 @@ int print_string(va_list args, char *buffer, int *add)
 	if (s == NULL)
 	{
 		for (; *null_string != '\0'; null_string++, count++)
-			print_buffer(buffer, add, *null_string);
+			print_buffer(*null_string, buffer, add);
 	}
 	else
 	{
 		for (; *s != '\0'; s++, count++)
-			print_buffer(buffer, add, *s);
+			print_buffer(*s, buffer, add);
 	}
 	return (count);
 }
@@ -48,7 +48,7 @@ int print_string(va_list args, char *buffer, int *add)
 int print_percent(va_list args, char *buffer, int *add)
 {
 	(void)args;
-	print_buffer(buffer, add, '%');
+	print_buffer('%', buffer, add);
 	return (1);
 }
 
@@ -64,11 +64,11 @@ int print_int_rec(int i, char *buffer, int *add)
 
 	if (i < 10)
 	{
-		print_buffer(buffer, add, '0' + i);
+		print_buffer('0' + i, buffer, add);
 		return (1);
 	}
 	count = print_int_rec(i / 10, buffer, add);
-	print_buffer(buffer, add, '0' + (i % 10));
+	print_buffer('0' + (i % 10), buffer, add);
 	return (count + 1);
 }
 
@@ -85,14 +85,14 @@ int print_int(va_list args, char *buffer, int *add)
 
 	if (i == INT_MIN)
 	{
-		print_buffer(buffer, add, '-');
-		print_buffer(buffer, add, '2');
+		print_buffer('-', buffer, add);
+		print_buffer('2', buffer, add);
 		count = print_int_rec(147483648, buffer, add);
 		return (count + 2);
 	}
 	if (i < 0)
 	{
-		print_buffer(buffer, add, '-');
+		print_buffer('-', buffer, add);
 		i = -i;
 		count++;
 	}

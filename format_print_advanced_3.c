@@ -7,23 +7,23 @@
 *
 * Return: The length of the number printed.
 */
-unsigned int print_HEXA_rec(unsigned int X)
+unsigned int print_HEXA_rec(unsigned int X, char *buffer, int *add)
 {
 	int count;
 
 	if (X < 16)
 	{
 		if (X > 9)
-			_putchar('0' + (X + 7));
+			print_buffer('0' + (X + 7), buffer, add);
 		else
-			_putchar('0' + X);
+			print_buffer('0' + X, buffer, add);
 		return (1);
 	}
-	count = print_HEXA_rec(X / 16);
+	count = print_HEXA_rec(X / 16, buffer, add);
 	if ((X % 16) > 9)
-		_putchar('0' + ((X % 16) + 7));
+		print_buffer('0' + ((X % 16) + 7), buffer, add);
 	else
-		_putchar('0' + (X % 16));
+		print_buffer('0' + (X % 16), buffer, add);
 	return (count + 1);
 }
 
@@ -34,12 +34,12 @@ unsigned int print_HEXA_rec(unsigned int X)
 *
 * Return: The length of the number printed.
 */
-int print_HEXA(va_list args)
+int print_HEXA(va_list args, char *buffer, int *add)
 {
 	unsigned int X = va_arg(args, unsigned int);
 	int count = 0;
 
-	count += print_HEXA_rec(X);
+	count += print_HEXA_rec(X, buffer, add);
 	return (count);
 }
 
@@ -51,7 +51,7 @@ int print_HEXA(va_list args)
  *
  * Return: The length of the string to print.
  */
-int print_STRING(va_list args)
+int print_STRING(va_list args, char *buffer, int *add)
 {
 	int count = 0;
 	unsigned int char_S;
@@ -60,20 +60,20 @@ int print_STRING(va_list args)
 	if (S == NULL)
 	{
 		for (; *null_STRING != '\0'; null_STRING++, count++)
-			_putchar(*null_STRING);
+			print_buffer(*null_STRING, buffer, add);
 	}
 	else
 	{
 		for (; *S != '\0'; S++, count++)
 			if (*S > 31 && *S < 127)
-				_putchar(*S);
+				print_buffer(*S, buffer, add);
 			else
 			{
 				char_S = *S;
-				_putchar('\\'), _putchar('x');
+				print_buffer('\\', buffer, add), print_buffer('x', buffer, add);
 				if (char_S < 16)
-					{ _putchar('0'), count++; }
-				count += 1 + print_HEXA_rec(char_S);
+					{ print_buffer('0', buffer, add), count++; }
+				count += 1 + print_HEXA_rec(char_S, buffer, add);
 			}
 	}
 	return (count);

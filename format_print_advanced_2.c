@@ -7,17 +7,17 @@
 *
 * Return: The length of the number printed.
 */
-unsigned int print_octal_rec(unsigned int o)
+unsigned int print_octal_rec(unsigned int o, char *buffer, int *add)
 {
 	int count;
 
 	if (o < 8)
 	{
-		_putchar('0' + o);
+		print_buffer('0' + o, buffer, add);
 		return (1);
 	}
-	count = print_octal_rec(o / 8);
-	_putchar('0' + (o % 8));
+	count = print_octal_rec(o / 8, buffer, add);
+	print_buffer('0' + (o % 8), buffer, add);
 	return (count + 1);
 }
 
@@ -28,12 +28,12 @@ unsigned int print_octal_rec(unsigned int o)
 *
 * Return: The length of the number printed.
 */
-int print_octal(va_list args)
+int print_octal(va_list args, char *buffer, int *add)
 {
 	unsigned int o = va_arg(args, unsigned int);
 	int count = 0;
 
-	count += print_octal_rec(o);
+	count += print_octal_rec(o, buffer, add);
 	return (count);
 }
 
@@ -44,23 +44,23 @@ int print_octal(va_list args)
 *
 * Return: The length of the number printed.
 */
-unsigned int print_hexa_rec(unsigned int x)
+unsigned int print_hexa_rec(unsigned int x, char *buffer, int *add)
 {
 	int count;
 
 	if (x < 16)
 	{
 		if (x > 9)
-			_putchar('0' + (x + 39));
+			print_buffer('0' + (x + 39), buffer, add);
 		else
-			_putchar('0' + x);
+			print_buffer('0' + x, buffer, add);
 		return (1);
 	}
-	count = print_hexa_rec(x / 16);
+	count = print_hexa_rec(x / 16, buffer, add);
 	if ((x % 16) > 9)
-		_putchar('0' + ((x % 16) + 39));
+		print_buffer('0' + ((x % 16) + 39), buffer, add);
 	else
-		_putchar('0' + (x % 16));
+		print_buffer('0' + (x % 16), buffer, add);
 	return (count + 1);
 }
 
@@ -71,11 +71,11 @@ unsigned int print_hexa_rec(unsigned int x)
 *
 * Return: The length of the number printed.
 */
-int print_hexa(va_list args)
+int print_hexa(va_list args, char *buffer, int *add)
 {
 	unsigned int x = va_arg(args, unsigned int);
 	int count = 0;
 
-	count += print_hexa_rec(x);
+	count += print_hexa_rec(x, buffer, add);
 	return (count);
 }

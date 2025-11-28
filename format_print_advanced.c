@@ -13,8 +13,8 @@ unsigned int print_binary_rec(unsigned int b, char *buffer, int *add)
 
 	if (b == 0)
 		return (0);
-	count = print_binary_rec(b / 2);
-	_putchar('0' + (b % 2));
+	count = print_binary_rec(b / 2,buffer, add);
+	print_buffer('0' + (b % 2), buffer, add);
 	return (count + 1);
 }
 
@@ -31,10 +31,10 @@ int print_binary(va_list args, char *buffer, int *add)
 
 	if (b == 0)
 	{
-		_putchar ('0');
+		print_buffer ('0', buffer, add);
 		return (1);
 	}
-	return (print_binary_rec(b));
+	return (print_binary_rec(b, buffer, add));
 }
 
 /**
@@ -49,11 +49,11 @@ int print_uint_rec(unsigned int u, char *buffer, int *add)
 
 	if (u < 10)
 	{
-		_putchar('0' + u);
+		print_buffer('0' + u, buffer, add);
 		return (1);
 	}
-	count = print_uint_rec(u / 10);
-	_putchar('0' + (u % 10));
+	count = print_uint_rec(u / 10, buffer, add);
+	print_buffer('0' + (u % 10), buffer, add);
 	return (count + 1);
 }
 
