@@ -9,7 +9,7 @@
 */
 int print_octal_rec(unsigned int o)
 {
-	int count;
+	int count = 0;
 
 	if (o < 8)
 	{
