@@ -102,7 +102,7 @@ int print_int(va_list args, char *buffer, int *add)
 	}
 	if (i < 0)
 	{
-		_putchar('-');
+		print_buffer('-', buffer, add);
 		i = -i;
 		count++;
 	}
