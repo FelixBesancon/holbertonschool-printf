@@ -11,11 +11,10 @@ int print_rev_rec(char *r)
 {
 	int count = 0;
 
-	if (*r != '\0')
-	{
-		count = print_rev_rec(r + 1);
-		_putchar(*r);
-	}
+	if (*r == '\0')
+		return (0);
+	count = print_rev_rec(r + 1);
+	_putchar(*r);
 	return (count + 1);
 }
 
