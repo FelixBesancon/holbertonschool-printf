@@ -11,36 +11,89 @@ int _printf(const char *format, ...);
 
 .SH DESCRIPTION
 
-_printf reads the format string and recognizes specifiers 'c', 's', '%', 'd', 'i' that prints their result and returns the number of printed characters.
+_printf prints output according to a format string.
+It handles a subset of the standard printf conversion specifiers.
+It processes characters sequentially and prints either literal characters 
+or values formatted according to their conversion specifier.
+It returns the total number of printed characters.
 
 .SH RETURN VALUE
 
-_printf returns the number of characters printed.
-It returns -1 if the format is null and if % is alone.
+_printf returns the number of characters successfully printed.
+It returns -1 if:
+.IP [bu] 2
+the format string is NULL
+.IP [bu] 2
+a '%' appears at the end of the format string with no specifier
 
 .SH FORMAT
-_printf handles the following format specifiers:
+_printf currently supports the following conversion specifiers:
 .TP
-%c:
-prints a character.
+%c
+Prints a single character.
 .TP
-%s:
-prints a string.
+%s
+Prints a string.
 .TP
-%%:
-prints a percent.
+%%
+Prints a percent sign.
 .TP
-%d:
-prints an integer.
+%d
+Prints a signed integer.
 .TP
-%i:
-prints an integer.
+%i
+Prints a signed integer (same as %d).
+.TP
+%b
+Prints an unsigned integer in binary.
+.TP
+%u
+Prints an unsigned integer.
+.TP
+%o
+Prints an unsigned integer in octal.
+.TP
+%x
+Prints an unsigned integer in lowercase hexadecimal.
+.TP
+%X
+Prints an unsigned integer in uppercase hexadecimal.
+.TP
+%S
+Prints a string and replaces non-printable characters with \xNN notation.
+.TP
+%p
+Prints the address of a pointer.
+.TP
+%r
+Prints a reversed string.
+.TP
+%R
+Prints a string encoded with the ROT13 cipher.
 
 .SH EXAMPLES
 
 .TP
 _printf("HOLBERTON : actual digital school is the  %s\n", "BEST!!!");
 Prints: HOLBERTON : actual digital school is the BEST!!!
+.TP
+_printf("Character: %c\n", 'A');
+Prints: Character: A
+.TP
+_printf("String: %s\n", "Hello");
+Prints: String: Hello
+.TP
+_printf("Numbers: %d %i\n", 98, -54);
+Prints: Numbers: 98 -54
+.TP
+_printf("Hex: %x - %X\n", 255, 255);
+Prints: Hex: ff - FF
+.TP
+_printf("Binary: %b\n", 17);
+Prints: Binary: 10001
+.TP
+_printf("Pointer: %p\n", (void *)&format);
+Prints an address similar to: 0x7ffeefbff5c0
 
 .SH SEE ALSO
 
@@ -48,4 +101,4 @@ printf(3), puts(3), write(2)
 
 .SH AUTHORS
 
-BESANÇON Félix, DEFIZE Pawnee
+BESANCON Félix, DEFIZE Pawnee
