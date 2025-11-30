@@ -9,7 +9,7 @@
 function: `printf`.
 Our implementation handles formatted output, using variadic functions,
 recursion and specific conversion specifiers.
-Its purpose is to understand how such a function works internally/
+Its purpose is to understand how such a function works internally.
 
 We describe here:
 - What the `_printf` function supports.
@@ -41,13 +41,27 @@ To compile all source files:
 -------------------------------------------------------------
 ## 4. Supported Conversion Specifiers
 
-Our implementation currently supports:
+Our implementation currently supports the following specifiers.
+These conversion specifiers are mapped internally through the 
+`get_spec_function` lookup table:
 
-- %c
-- %s
-- %%
-- %d
-- %i
+| Specifier | Handler function | Description                                                                                                |
+| --------- | ---------------- | ---------------------------------------------------------------------------------------------------------- |
+| %c        | print_char       | Prints a single character                                                                                  |
+| %s        | print_string     | Prints a null-terminated C string                                                                          |
+| %%        | print_percent    | Prints the literal '%' character                                                                           |
+| %d        | print_int        | Prints a signed integer (base 10)                                                                          |
+| %i        | print_int        | Alias of %d (signed integer)                                                                               |
+| %b        | print_binary     | Prints an unsigned int converted to binary                                                                 |
+| %u        | print_uint       | Prints an unsigned int (base 10)                                                                           |
+| %o        | print_octal      | Prints an unsigned int converted to octal                                                                  |
+| %x        | print_hexa       | Prints an unsigned int in lowercase hexadecimal                                                            |
+| %X        | print_HEXA       | Prints an unsigned int in UPPERCASE hexadecimal                                                            |
+| %S        | print_STRING     | Prints a string; non-printable chars are replaced by their uppercase hexadecimal ASCII code (format: \xNN) |
+| %p        | print_pointer    | Prints the memory address of a pointer in hexadecimal                                                      |
+| %r        | print_rev        | Prints a reversed string                                                                                   |
+| %R        | print_rot13      | Prints a string encoded with the ROT13 cipher                                                              |
+
 
 -------------------------------------------------------------
 ## 5. Flags, Field Width and Precision
@@ -62,7 +76,8 @@ List of **unsupported flags**:
 - field width (e.g. %5d) 
 - precision (e.g. %.3s)
 - length modifiers (h, l, etc.)
-Any of these appearing in the format string are not interpreted.
+Any of these flags, width or precision fields will be printed as
+literal characters and will not be interpreted.
 
 -------------------------------------------------------------
 ## 6. Examples
@@ -76,9 +91,6 @@ _printf("Integer: %d, %i\n", 98, -98765);
 _printf("Percent sign: %%\n");
 ```
 
-The return values and the overall behaviour of _printf should match
-the standard printf function whenever it is possible.
-
 Expected output:
 ```bash
 Character: A
@@ -87,87 +99,139 @@ Integer: 98, -98765
 Percent sign: %
 ```
 
+Examples with additional specifiers provided by this project:
+```c
+_printf("Binary: %b\n", 17);
+_printf("Unsigned: %u\n", 4294967295);
+_printf("Octal: %o\n", 255);
+_printf("Hex (lower): %x\n", 255);
+_printf("Hex (upper): %X\n", 255);
+
+_printf("Special string: %S\n", "Best\nSchool");
+_printf("Pointer: %p\n", (void *)&main);
+_printf("Reversed: %r\n", "Holberton");
+_printf("ROT13: %R\n", "Hello, World!");
+```
+
+Expected output:
+```
+Binary: 10001
+Unsigned: 4294967295
+Octal: 377
+Hex (lower): ff
+Hex (upper): FF
+Special string: Best\nSchool   (non-printable chars shown as \xNN)
+Pointer: 0x7ffe...
+Reversed: notrebloH
+ROT13: Uryyb, Jbeyq!
+```
+The exact return value of _printf (number of printed characters) 
+should match the standard printf whenever the format string 
+and arguments are supported by both functions.
+
 -------------------------------------------------------------
 ## 7. Testing
 
 We test the function by comparing our output with the standard printf:
 - Visual comparison of stdout
 - Comparison of return value (number of printed chars)
-- Edge cases handling
-- Memory safety checked with Valgrind
+- Edge cases handling (NULL pointers, unsupported specifiers, '%'
+  at end of string, etc.)
+- Memory safety checked with Valgrind:
+  `valgrind --leak-check=full ./a.out`
 
-Example:
-- `valgrind --leak-check=full ./a.out`
+Example test pattern:
+```c
+int a, b;
+
+a = _printf("Let's try to printf a %%!\n");
+b = printf("Let's try to printf a %%!\n");
+printf("_printf: %d, printf: %d\n\n", a, b);
+
+a = _printf("Text is string: %s\n", "this is a string.");
+b = printf("Text is string: %s\n", "this is a string.");
+printf("_printf: %d, printf: %d\n\n", a, b);
+
+a = _printf("Signed int: %d, %i\n", 12345, -98765);
+b = printf("Signed int: %d, %i\n", 12345, -98765);
+printf("_printf: %d, printf: %d\n\n", a, b);
+```
 
 -------------------------------------------------------------
 ## 8. Flowchart
 
-![Flowchart of _printf](Project_printf.svg)
+![Flowchart of _printf](holberton-printf.svg)
+
+### a. flowchart of _printf function:
 ```Mermaid
-flowchart TD
-
     %% --- Entry & setup ---
-    A([Start]) --> B[_printf(const char *format, ...)]
-    B --> C[Declare:<br/>int index, index_2, found<br/>int count = 0<br/>va_list args]
-    C --> D{format == NULL ?}
-    D -- Yes --> E[[return -1]]
-    D -- No --> F[va_start(args, format)<br/>index = 0]
-
-    %% --- Main loop on format string ---
-    F --> G{format[index] == '\\0' ?}
-    G -- Yes --> H[va_end(args)]
-    H --> I[[return count]]
-
-    G -- No --> J[found = 0]
-    J --> K{format[index] == '%' ?}
-
-    %% --- Normal character (not a '%') ---
-    K -- No --> L[_putchar(format[index])]
-    L --> M[count++]
-    M --> N[index++]
+    A([Start]) --> B[Call _printf(format, ...)]
+    B --> C[Declare and initialize variables:<br/>index = 0, count = 0,<br/>add = 0, buffer[1024], args,<br/>get_function]
+    C --> D{Is format NULL?}
+    
+    D -- Yes --> E[[return -1<br/>(error, nothing printed)]]
+    
+    D -- No --> F[Start variadic arguments:<br/>va_start(args, format)]
+    
+    %% --- Main loop over format string ---
+    F --> G{format[index] == '\0'?}
+    
+    %% End of string: flush and exit successfully
+    G -- Yes --> H[Flush buffer to stdout:<br/>write(1, buffer, add)]
+    H --> I[End variadic arguments:<br/>va_end(args)]
+    I --> J[[return count<br/>(total printed characters)]]
+    
+    %% Still characters left
+    G -- No --> K{Is format[index] == '%' ?}
+    
+    %% --- Normal character (no '%') ---
+    K -- No --> L[Store current char:<br/>print_buffer(format[index], buffer, &add)]
+    L --> M[count++<br/>(one more printed char)]
+    M --> N[index++<br/>(move to next char)]
     N --> G
-
-    %% --- '%' found: check specifier table ---
-    K -- Yes --> O[index_2 = 0]
-
-    %% Loop over specifier table
-    O --> P{format[index + 1] ==<br/>specifier[index_2].type<br/>&& found == 0 ?}
-
-    %% Matching specifier
-    P -- Yes --> Q[Call specifier[index_2].print_format(args)]
-    Q --> R[count += number of<br/>printed characters<br/>found = 1]
-    R --> S[index++<br/>(skip specifier char)]
-    S --> T[index++<br/>(for loop increment)]
-    T --> G
-
-    %% No match yet: move to next specifier
-    P -- No --> U{specifier[index_2].type == 0<br/>&& found == 0 ?}
-
-    %% Still specifiers left: continue loop
-    U -- No --> V[index_2++]
-    V --> P
-
-    %% End of specifier table and none matched
-    U -- Yes --> W{format[index + 1] == '\\0' ?}
-
-    %% Error: '%' is last character
-    W -- Yes --> H1[va_end(args)]
-    H1 --> E1[[return -1]]
-
-    %% Print '%' literally if next char exists
-    W -- No --> X[_putchar(format[index])]
-    X --> Y[count++]
-    Y --> N
-
-    %% --- Legend: specifier table content ---
-    subgraph Specifier_Table [Specifier table (conceptual)]
-        ST1[specifier[0] = 'c' → print_char]
-        ST2[specifier[1] = 's' → print_string]
-        ST3[specifier[2] = 'd' → print_int]
-        ST4[specifier[3] = 'i' → print_int]
-        ST5[specifier[4] = '%' → print_percent]
-        ST6[specifier[5].type = 0 → end marker]
+    
+    %% --- '%' found: handle specifier / error cases ---
+    K -- Yes --> O{Is format[index + 1] == '\0'?}
+    
+    %% Error: '%' is last character in string
+    O -- Yes --> P[End variadic arguments:<br/>va_end(args)]
+    P --> Q[[return -1<br/>(error: lone '%')]]
+    
+    %% There is at least one char after '%'
+    O -- No --> R[Get conversion function:<br/>get_function = get_spec_function(format[index + 1])]
+    
+    R --> S{Is get_function != NULL?}
+    
+    %% --- Valid specifier: call handler ---
+    S -- Yes --> T[Call handler:<br/>get_function(args, buffer, &add)]
+    T --> U[count += number of characters printed<br/>by the conversion function]
+    U --> V[index += 1<br/>(skip specifier char)]
+    V --> N
+    
+    %% --- Unknown specifier: print '%' and spec literally ---
+    S -- No --> W[Store '%' in buffer:<br/>print_buffer('%', buffer, &add)]
+    W --> X[Store specifier literally:<br/>print_buffer(format[index + 1], buffer, &add)]
+    X --> Y[count += 2<br/>(two characters printed)]
+    Y --> V
     end
+```
+### b. flowchart of get_spec_function:
+```Mermaid
+A([Start get_spec_function]) --> B[Receive specifier character sp]
+B --> C[Initialize index = 0]
+C --> D[Access specifier table:<br/>array of {type, print_function} pairs<br/>ending with {0, NULL}]
+D --> E{print_table[index].type == 0?}
+
+%% End of table, no match
+E -- Yes --> F[[return NULL<br/>(no matching function)]]
+
+%% Still entries available
+E -- No --> G{sp == print_table[index].type?}
+
+G -- Yes --> H[[return print_table[index].print_format<br/>(matching handler found)]]
+
+G -- No --> I[index++]
+I --> D
 ```
 
 -------------------------------------------------------------
