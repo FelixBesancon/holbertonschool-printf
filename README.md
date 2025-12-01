@@ -160,7 +160,7 @@ printf("_printf: %d, printf: %d\n\n", a, b);
 -------------------------------------------------------------
 ## 8. Flowchart
 
-![Flowchart of _printf]()
+![Flowchart of _printf](holberton-printf.svg)
 
 ### a. flowchart of _printf function:
 ```Mermaid
